@@ -1,17 +1,15 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from starlette.responses import RedirectResponse
 
 from api.upload import upload
-from api.getbucket import getbucket
+from api.get_obj import bucket
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
 
 app.include_router(upload.router, prefix="/upload", tags=["upload"])
-app.include_router(getbucket.router, prefix="/bucket", tags=["bucket"])
+app.include_router(bucket.router, prefix="/bucket", tags=["bucket"])
 
 
 @app.get('/')

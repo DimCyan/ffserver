@@ -1,3 +1,4 @@
+import math
 import os
 
 __basedir__ = os.path.dirname(os.path.abspath("__file__"))
@@ -18,7 +19,7 @@ async def _gen_size(file_path: str) -> str:
 
 
 async def _gen_mtime(file_path: str) -> str:
-    t = os.path.getmtime(file_path)
+    t = math.floor(os.path.getmtime(file_path))
     return str(t)
 
 
