@@ -32,21 +32,16 @@
             <div class="col-md-12 column">
                 <nav class="navbar navbar-default navbar-static-top" role="navigation">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/">FFServer</a>
+                        <a class="navbar-brand" href="https://github.com/SimonWDC/ffserver">FFServer</a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <form class="navbar-form navbar-left" role="search">
+                        <form class="navbar-form navbar-right" id="upload-file" enctype="multipart/form-data">
                             <div class="form-group">
-                                <input type="file" />
+                                <input type="file" id="fileobj" required />
                             </div>
                             <button type="submit" class="btn btn-default">Upload⬆️</button>
                         </form>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="https://github.com/SimonWDC/ffserver">Github📦</a>
-                            </li>
-                        </ul>
                     </div>
 
                 </nav>
@@ -128,8 +123,16 @@
                 var final_path = localhostPath + '/' + path_list[0];
                 for (let i = 1; i <= crumb_num; i++) {
                     final_path = final_path + '/' + path_list[i];
-                }
+                };
                 return final_path;
+            };
+
+            function genRestPath() {
+                var restPath = '';
+                for (let i = 1; i < path_list.length; i++) {
+                    restPath = restPath + '/' + path_list[i];
+                };
+                return restPath;
             };
             // modify timestamp
             function timeStamp2String(time) {
@@ -150,6 +153,26 @@
             $('tbody tr td:nth-child(1)').each(function () {
                 $(this).find(".objname").attr("href", window.location.href + "/" + $(this).find(
                     ".objname").attr("href"));
+            });
+            // upload file method
+            $('#upload-file').on('submit', function (e, form) {
+                e.preventDefault();
+                var restPath = genRestPath();
+                var file = $('#fileobj')[0].files[0];
+                let formData = new FormData(form);
+                formData.append('rest_path', restPath);
+                formData.append('file', file);
+
+                $.ajax({
+                    url: "/upload/uploader",
+                    type: "POST",
+                    headers: {
+                        accept: "application/json"
+                    },
+                    contentType: 'multipart/form-data',
+                    processData: false,
+                    'data': formData,
+                });
             });
         });
     </script>

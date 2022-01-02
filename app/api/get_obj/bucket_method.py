@@ -70,6 +70,10 @@ some_types = {
 }
 
 
+async def get_real_path(rest_of_path: str):
+    return os.path.join(bucket_path, *list(filter(None, rest_of_path.split('/'))))
+
+
 async def _gen_type(file_path: str) -> str:
     if os.path.isdir(file_path):
         return "📁"
