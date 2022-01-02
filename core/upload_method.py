@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from app.api.get_obj.bucket_method import get_real_path
+from core.bucket_method import get_real_path
 
 
 async def read_file(rest_path: str, file: UploadFile):

@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Request, File, UploadFile, Form
+from fastapi import APIRouter, Request
 from starlette.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 import os.path
-from .bucket_method import get_real_path, get_list
+from core.bucket_method import get_real_path, get_list
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
