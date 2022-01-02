@@ -3,13 +3,78 @@ import os
 
 __basedir__ = os.path.dirname(os.path.abspath("__file__"))
 bucket_path = os.path.join(__basedir__, "bucket")
+some_types = {
+    ".png": "🏞️",
+    ".dwg": "🏞️",
+    ".xcf": "🏞️",
+    ".jpg": "🏞️",
+    ".jpx": "🏞️",
+    ".gif": "🏞️",
+    ".webp": "🏞️",
+    ".cr2": "🏞️",
+    ".tif": "🏞️",
+    ".bmp": "🏞️",
+    ".jxr": "🏞️",
+    ".psd": "🏞️",
+    ".ico": "🏞️",
+    ".heic": "🏞️",
+    ".3gp": "🎥",
+    ".mp4": "🎥",
+    ".m4v": "🎥",
+    ".mkv": "🎥",
+    ".webm": "🎥",
+    ".mov": "🎥",
+    ".avi": "🎥",
+    ".wmv": "🎥",
+    ".mpg": "🎥",
+    ".flv": "🎥",
+    ".aac": "🎵",
+    ".mid": "🎵",
+    ".mp3": "🎵",
+    ".m4a": "🎵",
+    ".ogg": "🎵",
+    ".flac": "🎵",
+    ".wav": "🎵",
+    ".amr": "🎵",
+    ".aiff": "🎵",
+    ".br": "📦",
+    ".rpm": "📦",
+    ".dcm": "📦",
+    ".epub": "📦",
+    ".zip": "📦",
+    ".tar": "📦",
+    ".rar": "📦",
+    ".gz": "📦",
+    ".bz2": "📦",
+    ".7z": "📦",
+    ".xz": "📦",
+    ".pdf": "📦",
+    ".exe": "📦",
+    ".swf": "📦",
+    ".rtf": "📦",
+    ".eot": "📦",
+    ".ps": "📦",
+    ".sqlite": "📦",
+    ".nes": "📦",
+    ".crx": "📦",
+    ".cab": "📦",
+    ".deb": "📦",
+    ".ar": "📦",
+    ".Z": "📦",
+    ".lzo": "📦",
+    ".lz": "📦",
+    ".lz4": "📦",
+    ".txt": "📄",
+    ".py": "🐍",
+    ".rb": "💎"
+}
 
 
 async def _gen_type(file_path: str) -> str:
     if os.path.isdir(file_path):
-        return "dir"
+        return "📁"
     else:
-        return "file"
+        return some_types.get(os.path.splitext(file_path)[1], "❓")
 
 
 async def _gen_size(file_path: str) -> str:

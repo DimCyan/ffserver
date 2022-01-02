@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bucket</title>
+    <link rel='shortcut icon' type='image/x-icon' href="{{ url_for('static', path='/img/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -17,6 +18,10 @@
 
         .table>tbody>tr {
             padding: 8px 16px;
+        }
+
+        a:hover {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -62,7 +67,7 @@
                 <div class="alert alert-dismissable alert-warning">
                     <h4>
                         <strong>Warning!</strong>
-                    </h4> 
+                    </h4>
                     This folder is empty! 👉 <a href="javascript:history.back();" class="alert-link">Go Back</a>
                 </div>
                 {% else %}
@@ -78,16 +83,9 @@
                         {% for obj in obj_list %}
                         <tr>
                             <td>
-                                {% if obj.type == 'dir' %}
-                                <a class="objname" href="{{obj.file_name}}" onclick="">
-                                    {{obj.file_name}}
-                                </a>
-                                {% else %}
                                 <a class="objname" href="{{obj.file_name}}">
-                                    {{obj.file_name}}
+                                    {{ obj.type }} {{obj.file_name}}
                                 </a>
-                                {% endif %}
-
                             </td>
                             <td>
                                 {{obj.modify_time}}
