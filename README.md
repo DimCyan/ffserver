@@ -1,12 +1,12 @@
 # FFServer
 
-![](https://github.com/SimonWDC/ffserver/static/img/ffserver.png)
+![](https://github.com/SimonWDC/ffserver/blob/main/static/img/ffserver.png)
 
 Fastapi-based file service management
 
 ## Screenshots
 
-![](https://github.com/SimonWDC/ffserver/static/img/screenshot.png)
+![](https://github.com/SimonWDC/ffserver/blob/main/static/img/screenshot.png)
 
 ## Features
 
