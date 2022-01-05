@@ -166,12 +166,13 @@
                 $.ajax({
                     url: "/upload/uploader",
                     type: "POST",
-                    headers: {
-                        accept: "application/json"
-                    },
-                    contentType: 'multipart/form-data',
-                    processData: false,
+                    'contentType': false,
+                    'processData': false,
+                    'mimeType': 'multipart/form-data',
                     'data': formData,
+                    success: function() {
+                        location.reload();
+                    }
                 });
             });
         });
