@@ -1,8 +1,8 @@
 # FFServer
 
-## Fastapi-based file service management
-
 ![](https://github.com/SimonWDC/ffserver/blob/main/static/img/ffserver.png)
+
+Fastapi-based file service management
 
 ## Screenshots
 
@@ -14,7 +14,7 @@
 
 - 🍞 Display directory breadcrumb path
 
-- 📍 Support some file types icons via emoji😁
+- 📍 Support some file types icon by using emoji😁
 
 - ⬇️ Download file 
 
