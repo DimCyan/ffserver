@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import RedirectResponse
-import os
+from pathlib import Path
 from api import bucket, upload
 
 app = FastAPI()
-__basedir__ = os.path.dirname(os.path.abspath("__file__"))
-app.mount("/static", StaticFiles(directory=os.path.join(__basedir__, "static")), name="static")
+
+app.mount("/static", StaticFiles(directory=Path(__file__).parent.joinpath("static")), name="static")
 
 app.include_router(upload.router, prefix="/upload", tags=["upload"])
 app.include_router(bucket.router, prefix="/bucket", tags=["bucket"])
