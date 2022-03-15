@@ -1,7 +1,5 @@
 aiofiles
-caio
 fastapi
 pydantic
 python-multipart
-typing_extensions
 uvicorn
