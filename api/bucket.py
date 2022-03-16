@@ -12,9 +12,9 @@ async def get_dir_list(request: Request, rest_of_path: str = None):
     """
     :return: [{file_name: "", type: "", size: "", modify_time: ""}]
     """
-    real_path = await get_real_path(rest_of_path=rest_of_path)
+    real_path = get_real_path(rest_of_path=rest_of_path)
     if real_path.is_dir():
-        return templates.TemplateResponse("bucket.html", {"request": request, "obj_list": await get_list(real_path)})
+        return templates.TemplateResponse("bucket.html", {"request": request, "obj_list": get_list(real_path)})
     else:
         filename = list(filter(None, rest_of_path.split('/')))[-1]
         return FileResponse(real_path, filename=filename)

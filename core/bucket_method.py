@@ -6,17 +6,31 @@ bucket_path = Path("__file__").parent.joinpath("bucket")
 some_types = {
     'image': "🏞️",
     'video': "🎥",
+    'audio/mid': "🎼",
+    'audio/wav': "🎹",
     'audio': "🎵",
-    'application/json': "📄",
+    'text/.*ml': "📑", # xml/html
+    'text/css': "📃",
+    'text/x-python': "🐍", # py
+    'text/plain': "📝",
+    'text': "📄",
+    'application/.*download': "🕹", # exe
+    'application/json': "🧾",
+    'application/javascript': "📜", # js
     'application/x-tar': "📦",
     'application/x-zip-compressed': "📦",
-    'text/x-python': "🐍", # 要写在text之前才能被匹配
-    'text': "📄",
+    'application/pdf': "📔", # pdf
+    'application/msword': "📘", # doc
+    'application/vnd.*\.document': "📘", # docx
+    'application/vnd.ms-excel': "📗", # xls/csv
+    'application/vnd.*\.sheet': "📗", # xlsx
+    'application/vnd.ms-powerpoint': "📙", # ppt
+    'application/vnd.*\.presentation': "📙", # pptx
+    'application/x-x509-ca-cert': "📖", # crt/cer
+    'application/x-shockwave-flash': "📰", # swf
 }
 
-
-async def get_real_path(rest_of_path: str) -> Path:
-    print(rest_of_path)
+def get_real_path(rest_of_path: str) -> Path:
     return bucket_path / Path('.' + rest_of_path)
 
 
@@ -42,7 +56,7 @@ def _gen_mtime(file_path: Path) -> str:
     return str(t)
 
 
-async def get_list(folder_path: Path):
+def get_list(folder_path: Path):
     return [{"file_name": _.name,
              "type": _gen_type(_),
              "size": _gen_size(_),
