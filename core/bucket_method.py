@@ -1,72 +1,17 @@
-import math
+import math, mimetypes, re
 from pathlib import Path
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
 some_types = {
-    ".png": "🏞️",
-    ".dwg": "🏞️",
-    ".xcf": "🏞️",
-    ".jpg": "🏞️",
-    ".jpx": "🏞️",
-    ".gif": "🏞️",
-    ".webp": "🏞️",
-    ".cr2": "🏞️",
-    ".tif": "🏞️",
-    ".bmp": "🏞️",
-    ".jxr": "🏞️",
-    ".psd": "🏞️",
-    ".ico": "🏞️",
-    ".heic": "🏞️",
-    ".3gp": "🎥",
-    ".mp4": "🎥",
-    ".m4v": "🎥",
-    ".mkv": "🎥",
-    ".webm": "🎥",
-    ".mov": "🎥",
-    ".avi": "🎥",
-    ".wmv": "🎥",
-    ".mpg": "🎥",
-    ".flv": "🎥",
-    ".aac": "🎵",
-    ".mid": "🎵",
-    ".mp3": "🎵",
-    ".m4a": "🎵",
-    ".ogg": "🎵",
-    ".flac": "🎵",
-    ".wav": "🎵",
-    ".amr": "🎵",
-    ".aiff": "🎵",
-    ".br": "📦",
-    ".rpm": "📦",
-    ".dcm": "📦",
-    ".epub": "📦",
-    ".zip": "📦",
-    ".tar": "📦",
-    ".rar": "📦",
-    ".gz": "📦",
-    ".bz2": "📦",
-    ".7z": "📦",
-    ".xz": "📦",
-    ".pdf": "📦",
-    ".exe": "📦",
-    ".swf": "📦",
-    ".rtf": "📦",
-    ".eot": "📦",
-    ".ps": "📦",
-    ".sqlite": "📦",
-    ".nes": "📦",
-    ".crx": "📦",
-    ".cab": "📦",
-    ".deb": "📦",
-    ".ar": "📦",
-    ".Z": "📦",
-    ".lzo": "📦",
-    ".lz": "📦",
-    ".lz4": "📦",
-    ".txt": "📄",
-    ".py": "🐍",
-    ".rb": "💎"
+    'image': "🏞️",
+    'video': "🎥",
+    'audio': "🎵",
+    'application/json': "📄",
+    'application/x-tar': "📦",
+    'application/x-zip-compressed': "📦",
+    'text/x-python': "🐍", # 要写在text之前才能被匹配
+    'text': "📄",
 }
 
 
@@ -79,7 +24,11 @@ def _gen_type(file_path: Path) -> str:
     if file_path.is_dir():
         return "📁"
     else:
-        return some_types.get(file_path.name, "❓")
+        if(mime := mimetypes.guess_type(file_path.name)[0]):
+            for type, emoji in some_types.items():
+                if(re.match(type, mime)):
+                    return emoji
+        return "❓"
 
 
 def _gen_size(file_path: Path) -> str:
