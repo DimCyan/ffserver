@@ -16,5 +16,4 @@ async def get_dir_list(request: Request, rest_of_path: str = None):
     if real_path.is_dir():
         return templates.TemplateResponse("bucket.html", {"request": request, "obj_list": get_list(real_path)})
     else:
-        filename = list(filter(None, rest_of_path.split('/')))[-1]
-        return FileResponse(real_path, filename=filename)
+        return FileResponse(real_path, filename=real_path.name)

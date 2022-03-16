@@ -1,4 +1,4 @@
-import math, mimetypes, re
+import mimetypes, re
 from pathlib import Path
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
@@ -38,22 +38,26 @@ def _gen_type(file_path: Path) -> str:
     if file_path.is_dir():
         return "📁"
     else:
-        if(mime := mimetypes.guess_type(file_path.name)[0]):
+        if mime := mimetypes.guess_type(file_path.name)[0]:
             for type, emoji in some_types.items():
-                if(re.match(type, mime)):
+                if re.match(type, mime):
                     return emoji
         return "❓"
 
 
 def _gen_size(file_path: Path) -> str:
+    if file_path.is_dir():
+        return ''
     fsize = Path.stat(file_path).st_size
-    fsize /= float(1024 ** 2)
-    return str(round(fsize, 2)) + "MB"
+    series = ['B', 'KB', 'MB', 'GB', 'TB']
+    for _ in series:
+        if fsize < 1024:
+            return f"{fsize:.4g}{_}" # reserve 4 significant digits
+        fsize /= 1024
 
 
 def _gen_mtime(file_path: Path) -> str:
-    t = math.floor(Path.stat(file_path).st_mtime)
-    return str(t)
+    return f'{Path.stat(file_path).st_mtime // 1}'
 
 
 def get_list(folder_path: Path):
