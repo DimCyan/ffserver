@@ -1,104 +1,67 @@
-import math
-import os
+import mimetypes, re
+from pathlib import Path
 
-__basedir__ = os.path.dirname(os.path.abspath("__file__"))
-bucket_path = os.path.join(__basedir__, "bucket")
+bucket_path = Path("__file__").parent.joinpath("bucket")
+
 some_types = {
-    ".png": "🏞️",
-    ".dwg": "🏞️",
-    ".xcf": "🏞️",
-    ".jpg": "🏞️",
-    ".jpx": "🏞️",
-    ".gif": "🏞️",
-    ".webp": "🏞️",
-    ".cr2": "🏞️",
-    ".tif": "🏞️",
-    ".bmp": "🏞️",
-    ".jxr": "🏞️",
-    ".psd": "🏞️",
-    ".ico": "🏞️",
-    ".heic": "🏞️",
-    ".3gp": "🎥",
-    ".mp4": "🎥",
-    ".m4v": "🎥",
-    ".mkv": "🎥",
-    ".webm": "🎥",
-    ".mov": "🎥",
-    ".avi": "🎥",
-    ".wmv": "🎥",
-    ".mpg": "🎥",
-    ".flv": "🎥",
-    ".aac": "🎵",
-    ".mid": "🎵",
-    ".mp3": "🎵",
-    ".m4a": "🎵",
-    ".ogg": "🎵",
-    ".flac": "🎵",
-    ".wav": "🎵",
-    ".amr": "🎵",
-    ".aiff": "🎵",
-    ".br": "📦",
-    ".rpm": "📦",
-    ".dcm": "📦",
-    ".epub": "📦",
-    ".zip": "📦",
-    ".tar": "📦",
-    ".rar": "📦",
-    ".gz": "📦",
-    ".bz2": "📦",
-    ".7z": "📦",
-    ".xz": "📦",
-    ".pdf": "📦",
-    ".exe": "📦",
-    ".swf": "📦",
-    ".rtf": "📦",
-    ".eot": "📦",
-    ".ps": "📦",
-    ".sqlite": "📦",
-    ".nes": "📦",
-    ".crx": "📦",
-    ".cab": "📦",
-    ".deb": "📦",
-    ".ar": "📦",
-    ".Z": "📦",
-    ".lzo": "📦",
-    ".lz": "📦",
-    ".lz4": "📦",
-    ".txt": "📄",
-    ".py": "🐍",
-    ".rb": "💎"
+    'image': "🏞️",
+    'video': "🎥",
+    'audio/mid': "🎼",
+    'audio/wav': "🎹",
+    'audio': "🎵",
+    'text/.*ml': "📑", # xml/html
+    'text/css': "📃",
+    'text/x-python': "🐍", # py
+    'text/plain': "📝",
+    'text': "📄",
+    'application/.*download': "🕹", # exe
+    'application/json': "🧾",
+    'application/javascript': "📜", # js
+    'application/x-tar': "📦",
+    'application/x-zip-compressed': "📦",
+    'application/pdf': "📔", # pdf
+    'application/msword': "📘", # doc
+    'application/vnd.*\.document': "📘", # docx
+    'application/vnd.ms-excel': "📗", # xls/csv
+    'application/vnd.*\.sheet': "📗", # xlsx
+    'application/vnd.ms-powerpoint': "📙", # ppt
+    'application/vnd.*\.presentation': "📙", # pptx
+    'application/x-x509-ca-cert': "📖", # crt/cer
+    'application/x-shockwave-flash': "📰", # swf
 }
 
+def get_real_path(rest_of_path: str) -> Path:
+    return bucket_path / Path('.' + rest_of_path)
 
-async def get_real_path(rest_of_path: str):
-    return os.path.join(bucket_path, *list(filter(None, rest_of_path.split('/'))))
 
-
-async def _gen_type(file_path: str) -> str:
-    if os.path.isdir(file_path):
+def _gen_type(file_path: Path) -> str:
+    if file_path.is_dir():
         return "📁"
     else:
-        return some_types.get(os.path.splitext(file_path)[1], "❓")
+        if mime := mimetypes.guess_type(file_path.name)[0]:
+            for type, emoji in some_types.items():
+                if re.match(type, mime):
+                    return emoji
+        return "❓"
 
 
-async def _gen_size(file_path: str) -> str:
-    fsize = os.path.getsize(file_path)
-    fsize = fsize / float(1024 * 1024)
-    return str(round(fsize, 2)) + "MB"
+def _gen_size(file_path: Path) -> str:
+    if file_path.is_dir():
+        return ''
+    fsize = Path.stat(file_path).st_size
+    series = ['B', 'KB', 'MB', 'GB', 'TB']
+    for _ in series:
+        if fsize < 1024:
+            return f"{fsize:.4g}{_}" # reserve 4 significant digits
+        fsize /= 1024
 
 
-async def _gen_mtime(file_path: str) -> str:
-    t = math.floor(os.path.getmtime(file_path))
-    return str(t)
+def _gen_mtime(file_path: Path) -> str:
+    return f'{Path.stat(file_path).st_mtime // 1}'
 
 
-async def get_list(folder_path: str):
-    name_list: list = os.listdir(folder_path)
-    path_list: list = [os.path.join(folder_path, _) for _ in name_list]
-    type_list: list = [await _gen_type(_) for _ in path_list]
-    size_list: list = [await _gen_size(_) for _ in path_list]
-    mtime_list: list = [await _gen_mtime(_) for _ in path_list]
-    return [{"file_name": name_list[_],
-             "type": type_list[_],
-             "size": size_list[_],
-             "modify_time": mtime_list[_]} for _ in range(len(name_list))]
+def get_list(folder_path: Path):
+    return [{"file_name": _.name,
+             "type": _gen_type(_),
+             "size": _gen_size(_),
+             "modify_time": _gen_mtime(_)} for _ in folder_path.iterdir()]

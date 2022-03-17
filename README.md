@@ -2,7 +2,7 @@
 
 ![](https://github.com/SimonWDC/ffserver/blob/main/static/img/ffserver.png)
 
-Fastapi-based file service management
+Fastapi-based file service management (Python3.8+)
 
 ## Screenshots
 
