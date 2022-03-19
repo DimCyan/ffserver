@@ -1,0 +1,239 @@
+@import url("//at.alicdn.com/t/font_3259001_he2zgmvein9.css");
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  overflow: hidden;
+}
+#app .header {
+  background-color: #fff;
+  -webkit-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+}
+#app .header .header-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 24px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 56px;
+}
+#app .header .header-wrapper .logo .logo-link {
+  font-size: 26px;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+#app .header .header-wrapper .uploader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 50px;
+  cursor: pointer;
+}
+#app .header .header-wrapper .uploader .file-input {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+#app .header .header-wrapper .uploader .file-input input[type=file] {
+  opacity: 0;
+}
+#app .header .header-wrapper .uploader .file-input .out {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  height: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+#app .header .header-wrapper .uploader .file-input .out button {
+  width: 40px;
+  height: 28px;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  border: none;
+  color: #06a7ff;
+  background-color: #f0fbff;
+  white-space: nowrap;
+  font-size: 12px;
+}
+#app .header .header-wrapper .uploader .file-input .out .text {
+  white-space: nowrap;
+  margin-left: 10px;
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+#app .header .header-wrapper .uploader .submit-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  width: 88px;
+  height: 32px;
+  background-color: #06a7ff;
+  border-radius: 16px;
+  color: #fff;
+}
+#app .alert {
+  height: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+#app .alert .empty {
+  color: #fed57d;
+  margin-bottom: 30px;
+}
+#app .alert .empty .iconfont {
+  font-size: 80px;
+}
+#app .alert .back {
+  width: 128px;
+  height: 42px;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #f0faff;
+  color: #06a7ff;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+#app .file-content {
+  width: 1069px;
+  margin: 0 auto;
+}
+#app .file-content .routes .breadcrumb {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: flex;
+  height: 40px;
+  font-size: 12px;
+}
+#app .file-content .routes .breadcrumb a {
+  text-decoration: none;
+}
+#app .file-content .routes .breadcrumb li {
+  color: #06a7ff;
+}
+#app .file-content .routes .breadcrumb li a {
+  color: #06a7ff;
+}
+#app .file-content .routes .breadcrumb li:last-child {
+  color: #afb3bf;
+}
+#app .file-content .routes .breadcrumb li:not(:last-child)::after {
+  font-family: "iconfont";
+  content: "\e6a2";
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 20px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  opacity: 0.6;
+}
+#app .file-content .routes .breadcrumb .all:last-child {
+  font-weight: bold;
+  color: #03081a;
+}
+#app .file-content .routes .breadcrumb .all:last-child a {
+  color: #03081a;
+}
+#app .file-content .table {
+  border-collapse: collapse;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+#app .file-content .table thead,
+#app .file-content .table tbody,
+#app .file-content .table tr,
+#app .file-content .table th,
+#app .file-content .table td {
+  padding: 0;
+  margin: 0;
+}
+#app .file-content .table a {
+  text-decoration: none;
+}
+#app .file-content .table tr {
+  border-bottom: #f8f8f8 solid 1px;
+}
+#app .file-content .table th {
+  text-align: left;
+  height: 50px;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: bold;
+}
+#app .file-content .table td {
+  text-align: left;
+  height: 50px;
+  vertical-align: middle;
+  font-size: 12px;
+  color: #afb3bf;
+}
+#app .file-content .table td a {
+  color: #05082c;
+}
+
+/*# sourceMappingURL=theme.css.map */

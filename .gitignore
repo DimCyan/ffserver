@@ -131,3 +131,7 @@ dmypy.json
 # more
 bucket/
 .idea/
+
+# local style source
+*.scss
+*.css.map
