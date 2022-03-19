@@ -144,8 +144,14 @@ body {
   margin-top: 30px;
 }
 #app .file-content {
-  width: 1069px;
+  max-width: 1069px;
   margin: 0 auto;
+}
+@media screen and (max-width: 1069px) {
+  #app .file-content {
+    margin: 0 30px;
+    width: auto;
+  }
 }
 #app .file-content .routes .breadcrumb {
   list-style: none;
