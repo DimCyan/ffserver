@@ -102,6 +102,13 @@ body {
   border-radius: 16px;
   color: #fff;
 }
+@media screen and (max-width: 478px) {
+  #app .header .header-wrapper .uploader .submit-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+  }
+}
 #app .alert {
   height: 400px;
   display: -webkit-box;
