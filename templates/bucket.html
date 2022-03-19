@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', path='/js/qrcode.min.js') }}"></script>
     <style>
         .table {
             outline-style: solid;
@@ -69,16 +70,17 @@
                 <table class="col-md-6 table table-hover">
                     <thead>
                         <tr>
-                            <th style="width: 40%;">Name</th>
-                            <th style="width: 30%">ModifyTime</th>
-                            <th style="width: 30%" class="text-right">Size</th>
+                            <th style="width: 60%;">Name</th>
+                            <th style="width: 20%">ModifyTime</th>
+                            <th style="width: 10%" class="text-right">Size</th>
+                            <th style="width: 10%" class="text-right">QR</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for obj in obj_list %}
                         <tr>
                             <td>
-                                <a class="objname" href="{{obj.file_name}}">
+                                <a id="test" class="objname" href="{{obj.file_name}}">
                                     {{ obj.type }} {{obj.file_name}}
                                 </a>
                             </td>
@@ -86,11 +88,15 @@
                                 {{obj.modify_time}}
                             </td>
                             <td class="text-right">
-                                {% if obj.type == 'dir' %}
+                                {% if obj.type == '📁' %}
                                 ~
                                 {% else %}
                                 {{obj.size}}
                                 {% endif %}
+                            </td>
+                            <td class="text-right">
+                                <p id="qr_btn" data-toggle="modal" data-target="#QRModal"
+                                    onclick="get_qr('{{ obj.file_name }}')">👁‍🗨</p>
                             </td>
                         </tr>
                         {% endfor %}
@@ -100,7 +106,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="QRModal" tabindex="-1" role="dialog" aria-labelledby="QRModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 300px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="QRModalLabel">QRCode</h3>
+                </div>
+                <div class="modal-body" id="qrcode"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        //QRCode function
+        function get_qr(str) {
+            $('#qrcode').html('');
+            var qrcode = new QRCode(document.getElementById("qrcode"), window.document.location.href + '/' + str);
+        };
         $(document).ready(function () {
             // modify breadcrumb
             var curWwwPath = window.document.location.href;
@@ -170,7 +194,7 @@
                     'processData': false,
                     'mimeType': 'multipart/form-data',
                     'data': formData,
-                    success: function() {
+                    success: function () {
                         location.reload();
                     }
                 });

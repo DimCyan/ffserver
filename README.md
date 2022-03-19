@@ -1,12 +1,12 @@
 # FFServer
 
-![](https://github.com/SimonWDC/ffserver/blob/main/static/img/ffserver.png)
+![](https://github.com/DimCyan/ffserver/blob/main/static/img/ffserver.png)
 
 Fastapi-based file service management (Python3.8+)
 
 ## Screenshots
 
-![](https://github.com/SimonWDC/ffserver/blob/main/static/img/screenshot.png)
+![](https://github.com/DimCyan/ffserver/blob/main/static/img/screenshot.png)
 
 ## Features
 
@@ -36,14 +36,16 @@ Fastapi-based file service management (Python3.8+)
 
 ## TODO
 
-1. Support Previewing `Readme.md` in directory
+1. [ ] Support Previewing `Readme.md` in directory
 
-2. Support QRCode
+1. [x] Support QRCode
 
-3. Create folder
+2. [ ] Create folder
 
 ## Special thanks
 
 1. [browsepy](https://github.com/ergoithz/browsepy)
 
 2. [gohttpserver](https://github.com/codeskyblue/gohttpserver)
+
+3. [qrcodejs](https://github.com/davidshimjs/qrcodejs)
