@@ -2,14 +2,16 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>Bucket</title>
-    <link rel='shortcut icon' type='image/x-icon' href="{{ url_for('static', path='/img/favicon.ico') }}">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='shortcut icon' type='image/x-icon' href="/static/img/favicon.ico">
+    <!-- <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/static/styles/theme.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <style>
-        .table {
+        /* .table {
             outline-style: solid;
             outline-width: 1px;
             outline-color: #d0d7de;
@@ -22,86 +24,97 @@
 
         a:hover {
             text-decoration: none;
-        }
+        } */
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="https://github.com/DimCyan/ffserver">FFServer</a>
-                    </div>
+    <div id="app">
+        <div class="header">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <a class="logo-link" href="https://github.com/DimCyan/ffserver">FFServer</a>
+                </div>
 
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <form class="navbar-form navbar-right" id="upload-file" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <input type="file" id="fileobj" required />
+                <form id="upload-file" enctype="multipart/form-data">
+                    <div class="uploader">
+                        <div class="file-input">
+                            <input type="file" id="fileobj" required />
+                            <div class="out">
+                                <button type="button">
+                                    <i class="iconfont icon-file-plus"></i>
+                                </button>
+                                <div class="text">No files selected</div>
                             </div>
-                            <button type="submit" class="btn btn-default">Upload⬆️</button>
-                        </form>
+                        </div>
+                        <button type="submit" class="submit-btn"> <i class="iconfont icon-upload"></i> Upload</button>
                     </div>
-
-                </nav>
+                </form>
             </div>
         </div>
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="row clearfix">
-                    <div class="col-md-12 column">
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="/">🏠</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                {% if obj_list == [] %}
-                <div class="alert alert-dismissable alert-warning">
-                    <h4>
-                        <strong>Warning!</strong>
-                    </h4>
-                    This folder is empty! 👉 <a href="javascript:history.back();" class="alert-link">Go Back</a>
-                </div>
-                {% else %}
-                <table class="col-md-6 table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width: 40%;">Name</th>
-                            <th style="width: 30%">ModifyTime</th>
-                            <th style="width: 30%" class="text-right">Size</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for obj in obj_list %}
-                        <tr>
-                            <td>
-                                <a class="objname" href="{{obj.file_name}}">
-                                    {{ obj.type }} {{obj.file_name}}
-                                </a>
-                            </td>
-                            <td>
-                                {{obj.modify_time}}
-                            </td>
-                            <td class="text-right">
-                                {% if obj.type == 'dir' %}
-                                ~
-                                {% else %}
-                                {{obj.size}}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% endif %}
+        <div class="file-content">
+            <div class="routes">
+                <ul class="breadcrumb">
+                    <li class="all">
+                        <a href="/">All Files</a>
+                    </li>
+                </ul>
             </div>
+            {% if obj_list == [] %}
+            <div class="alert">
+                <div class="empty">
+                    <i class="iconfont icon-empty"></i>
+                </div>
+                This folder is empty!
+                <br>
+                <a class="back" href="javascript:history.back();" class="alert-link">Go Back</a>
+            </div>
+            {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Name</th>
+                        <th style="width: 30%">ModifyTime</th>
+                        <th style="width: 30%" class="text-right">Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in obj_list %}
+                    <tr>
+                        <td>
+                            <a class="objname" href="{{obj.file_name}}">
+                                {{ obj.type }} {{obj.file_name}}
+                            </a>
+                        </td>
+                        <td>
+                            {{obj.modify_time}}
+                        </td>
+                        <td class="text-right">
+                            {% if obj.type == 'dir' %}
+                            ~
+                            {% else %}
+                            {{obj.size}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
         </div>
     </div>
     <script>
         $(document).ready(function () {
+
+            $('.file-input').on('click', '.out', function () {
+                $(this).parent().find('input[type="file"]').click()
+            })
+            $('.file-input').on('change', 'input[type="file"]', function () {
+                var file = this.files[0]
+                $(this).parent().attr('title', file.name)
+                $(this).parent().find('.out .text').html(file.name)
+            })
+
             // modify breadcrumb
             var curWwwPath = window.document.location.href;
             var pathName = window.document.location.pathname;
@@ -170,7 +183,7 @@
                     'processData': false,
                     'mimeType': 'multipart/form-data',
                     'data': formData,
-                    success: function() {
+                    success: function () {
                         location.reload();
                     }
                 });
