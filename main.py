@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from starlette.responses import RedirectResponse
+from starlette.responses import HTMLResponse, RedirectResponse
 from pathlib import Path
 import api
 
@@ -8,16 +8,16 @@ app = FastAPI(title='FFServer', description="""
     It's not safe at all. Use it on your home WLAN.
 """)
 
-app.mount("/static", StaticFiles(directory=Path(__file__).parent.joinpath("static")), name="static")
 
-app.include_router(api.bucket, prefix="/bucket", tags=["bucket"])
+@app.get('/', response_class=HTMLResponse, tags=["page"])
+def index():
+    return RedirectResponse(url='/index.html')
+
+
+app.mount("/", StaticFiles(directory=Path(__file__).parent.joinpath("static")), name="static")
+
 app.include_router(api.file, prefix="/file")
 app.include_router(api.folder, prefix="/folder")
-
-
-@app.get('/')
-def index():
-    return RedirectResponse(url='/bucket')
 
 
 if __name__ == '__main__':
