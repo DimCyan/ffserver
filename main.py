@@ -2,14 +2,17 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import RedirectResponse
 from pathlib import Path
-from api import bucket, upload
+import api
 
-app = FastAPI()
+app = FastAPI(title='FFServer', description="""
+    It's not safe at all. Use it on your home WLAN.
+""")
 
 app.mount("/static", StaticFiles(directory=Path(__file__).parent.joinpath("static")), name="static")
 
-app.include_router(upload.router, prefix="/upload", tags=["upload"])
-app.include_router(bucket.router, prefix="/bucket", tags=["bucket"])
+app.include_router(api.bucket, prefix="/bucket", tags=["bucket"])
+app.include_router(api.file, prefix="/file")
+app.include_router(api.folder, prefix="/folder")
 
 
 @app.get('/')

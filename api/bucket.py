@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Request
-from starlette.responses import FileResponse
+from starlette.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from core.bucket_method import get_real_path, get_list
 
-router = APIRouter()
+bucket = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 
-@router.get("{rest_of_path:path}")
+@bucket.get("{rest_of_path:path}", response_class=HTMLResponse, summary="Jinja2Templates Page")
 async def get_dir_list(request: Request, rest_of_path: str = None):
     """
     :return: [{file_name: "", type: "", size: "", modify_time: ""}]

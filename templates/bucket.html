@@ -184,11 +184,9 @@
                 var restPath = genRestPath();
                 var file = $('#fileobj')[0].files[0];
                 let formData = new FormData(form);
-                formData.append('rest_path', restPath);
                 formData.append('file', file);
-
                 $.ajax({
-                    url: "/upload/uploader",
+                    url: `/file/${restPath}`,
                     type: "POST",
                     'contentType': false,
                     'processData': false,
