@@ -1,4 +1,5 @@
-import mimetypes, re
+import mimetypes
+import re
 from pathlib import Path
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
@@ -9,26 +10,27 @@ some_types = {
     'audio/mid': "🎼",
     'audio/wav': "🎹",
     'audio': "🎵",
-    'text/.*ml': "📑", # xml/html
+    'text/.*ml': "📑",  # xml/html
     'text/css': "📃",
-    'text/x-python': "🐍", # py
+    'text/x-python': "🐍",  # py
     'text/plain': "📝",
     'text': "📄",
-    'application/.*download': "🕹", # exe
+    'application/.*download': "🕹",  # exe
     'application/json': "🧾",
-    'application/javascript': "📜", # js
+    'application/javascript': "📜",  # js
     'application/x-tar': "📦",
     'application/x-zip-compressed': "📦",
-    'application/pdf': "📔", # pdf
-    'application/msword': "📘", # doc
-    'application/vnd.*\.document': "📘", # docx
-    'application/vnd.ms-excel': "📗", # xls/csv
-    'application/vnd.*\.sheet': "📗", # xlsx
-    'application/vnd.ms-powerpoint': "📙", # ppt
-    'application/vnd.*\.presentation': "📙", # pptx
-    'application/x-x509-ca-cert': "📖", # crt/cer
-    'application/x-shockwave-flash': "📰", # swf
+    'application/pdf': "📔",  # pdf
+    'application/msword': "📘",  # doc
+    'application/vnd.*\\.document': "📘",  # docx
+    'application/vnd.ms-excel': "📗",  # xls/csv
+    'application/vnd.*\\.sheet': "📗",  # xlsx
+    'application/vnd.ms-powerpoint': "📙",  # ppt
+    'application/vnd.*\\.presentation': "📙",  # pptx
+    'application/x-x509-ca-cert': "📖",  # crt/cer
+    'application/x-shockwave-flash': "📰",  # swf
 }
+
 
 def get_real_path(rest_of_path: str) -> Path:
     return bucket_path / Path('.' + rest_of_path)
@@ -52,7 +54,7 @@ def _gen_size(file_path: Path) -> str:
     series = ['B', 'KB', 'MB', 'GB', 'TB']
     for _ in series:
         if fsize < 1024:
-            return f"{fsize:.4g}{_}" # reserve 4 significant digits
+            return f"{fsize:.4g}{_}"  # reserve 4 significant digits
         fsize /= 1024
 
 
