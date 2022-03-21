@@ -5,7 +5,7 @@ from pathlib import Path
 import api
 
 
-app = FastAPI(title='FFServer', description="""
+app = FastAPI(title='FFServer API', description="""
     It's not safe at all. Use it on your home WLAN.
 """)
 

@@ -1,5 +1,5 @@
 """core method"""
 
-__all__ = ['sysfile']
+__all__ = ['sys_resource']
 
-from . import sysfile
+from . import sys_resource

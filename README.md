@@ -4,17 +4,16 @@
 
 Fastapi-based file service management (Python3.8+)
 
+
+# FFServer API
+
+FFServer tekini　API
+
 ## Screenshots
 
 ![](https://github.com/DimCyan/ffserver/blob/main/static/img/screenshot.png)
 
 ## Features
-
-- 📁 Directory Listing
-
-- 🍞 Display directory breadcrumb path
-
-- 📍 Support some file types icon by using emoji😁
 
 - ⬇️ Download file 
 
@@ -32,20 +31,19 @@ Fastapi-based file service management (Python3.8+)
     python -m main
     ```
 
-3. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
+3. Open Browser With URL: [http://127.0.0.1:8010/docs](http://127.0.0.1:8010/docs)
+
+4. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
 
 ## TODO
 
-1. [ ] Support Previewing `Readme.md` in directory
+1. [ ] delete(rm)
 
-1. [x] Support QRCode
+2. [x] put(mv)
 
-2. [ ] Create folder
+3. [ ] /api/zip
+
 
 ## Special thanks
 
-1. [browsepy](https://github.com/ergoithz/browsepy)
-
-2. [gohttpserver](https://github.com/codeskyblue/gohttpserver)
-
-3. [qrcodejs](https://github.com/davidshimjs/qrcodejs)
+...
