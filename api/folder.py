@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, Form, HTTPException
+from sympy import re
 from . import schemas
 from core import sys_resource
 import pathlib
@@ -10,6 +11,7 @@ folder = APIRouter(tags=["folder"])
 
 @folder.get("{url_path:path}", response_model=list[Union[schemas.sys_folder, schemas.sys_file]], summary="ls")
 async def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
+    """get all file_stat_info in specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
     ls = []
@@ -29,9 +31,9 @@ async def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
     return ls
     
 
-
 @folder.post("{url_path:path}", response_model=schemas.sys_folder, summary="mkdir")
 async def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirname: str = Form(...)):
+    """create a folder in specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
     dirname = dirname.strip()
@@ -49,4 +51,17 @@ async def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirn
         raise HTTPException(status_code=404)
     except FileExistsError:
         raise HTTPException(status_code=412, detail="Directory already exists")
+
+
+@folder.delete("{url_path:path}", summary="rm -f")
+async def remove_folder(path: pathlib.Path = Depends(sys_resource.syspath)):
+    """remove non-empty folder"""
+    if path == sys_resource.bucket_path:
+        raise HTTPException(status_code=422, detail="Cannot remove root folder")
+    try:
+        pathlib.Path.rmdir(path)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404)
+    except OSError:
+        raise HTTPException(status_code=412, detail="The folder is not empty")
     

@@ -37,9 +37,9 @@ FFServer tekini　API
 
 ## TODO
 
-1. [ ] delete(rm)
+1. [x] delete(rm)
 
-2. [x] put(mv)
+2. [ ] put(mv)
 
 3. [ ] /api/zip
 

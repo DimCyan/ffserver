@@ -1,6 +1,7 @@
 from pathlib import Path
 import fastapi
 import aiofiles
+import re
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 

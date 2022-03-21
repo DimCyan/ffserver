@@ -10,6 +10,7 @@ file = APIRouter(tags=["file"])
 
 @file.get("{url_path:path}", response_class=FileResponse, summary="download")
 async def download_file(path: pathlib.Path = Depends(sys_resource.syspath)):
+    """download file"""
     if path.is_file():
         return FileResponse(path, filename=path.name)
     raise HTTPException(status_code=404)
@@ -17,6 +18,7 @@ async def download_file(path: pathlib.Path = Depends(sys_resource.syspath)):
 
 @file.post("{url_path:path}", response_model=schemas.sys_file, summary="upload")
 async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: UploadFile = File(...)):
+    """upload file to specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
     new_file = path / pathlib.Path(file.filename)
@@ -31,5 +33,17 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
             pathlib.Path.stat(new_file).st_mtime),
         size=sys_resource.format_bytes_size(new_file)
     )
-    
+
+
+@file.delete("{url_path:path}", summary="rm -f")
+async def remove_file(path: pathlib.Path = Depends(sys_resource.syspath)):
+    """remove file"""
+    if not path.is_file():
+        raise HTTPException(status_code=404)
+    try:
+        pathlib.Path.unlink(path)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404)
+    except OSError:
+        raise HTTPException(status_code=412, detail="The file has been opened")
     
