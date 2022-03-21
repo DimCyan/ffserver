@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Form, HTTPException
-from sympy import re
+import shutil
 from . import schemas
 from core import sys_resource
 import pathlib
@@ -53,15 +53,26 @@ async def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirn
         raise HTTPException(status_code=412, detail="Directory already exists")
 
 
-@folder.delete("{url_path:path}", summary="rm -f")
+@folder.delete("{url_path:path}", summary="rm -rf")
 async def remove_folder(path: pathlib.Path = Depends(sys_resource.syspath)):
-    """remove non-empty folder"""
+    """remove empty folder and non-empty folder"""
     if path == sys_resource.bucket_path:
         raise HTTPException(status_code=422, detail="Cannot remove root folder")
+    """
     try:
-        pathlib.Path.rmdir(path)
+        pathlib.Path.rmdir(path) # rm -f
     except FileNotFoundError:
         raise HTTPException(status_code=404)
     except OSError:
         raise HTTPException(status_code=412, detail="The folder is not empty")
+    """
+    try:
+        shutil.rmtree(path) # rm -rf
+    except FileNotFoundError:
+        raise HTTPException(status_code=404)
+    except OSError as e:
+        raise HTTPException(status_code=412, detail=f"{e}")
+    
+
+    
     

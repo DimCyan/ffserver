@@ -44,6 +44,6 @@ async def remove_file(path: pathlib.Path = Depends(sys_resource.syspath)):
         pathlib.Path.unlink(path)
     except FileNotFoundError:
         raise HTTPException(status_code=404)
-    except OSError:
-        raise HTTPException(status_code=412, detail="The file has been opened")
+    except OSError as e:
+        raise HTTPException(status_code=412, detail=f"{e}")
     
