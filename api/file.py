@@ -15,7 +15,7 @@ async def download_file(path: pathlib.Path = Depends(sysfile.syspath)):
     raise HTTPException(status_code=404)
 
 
-@file.post("{url_path:path}", response_model=schemas.file, summary="upload")
+@file.post("{url_path:path}", response_model=schemas.sys_file, summary="upload")
 async def upload_file(path: pathlib.Path = Depends(sysfile.syspath), file: UploadFile = File(...)):
     if not path.is_dir():
         raise HTTPException(status_code=404)
@@ -25,9 +25,8 @@ async def upload_file(path: pathlib.Path = Depends(sysfile.syspath), file: Uploa
     if not sysfile.check_name(file.filename):
         raise HTTPException(status_code=422, detail="Dirname cannot contain \/:*?<>|")
     await sysfile.save_formfile(new_file, file)
-    return schemas.file(
+    return schemas.sys_file(
         name=new_file.name,
-        type=sysfile.match_emoji(new_file),
         mtime=datetime.fromtimestamp(
             pathlib.Path.stat(new_file).st_mtime),
         size=sysfile.format_bytes_size(new_file)

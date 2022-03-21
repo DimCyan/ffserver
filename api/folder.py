@@ -8,21 +8,20 @@ from typing import Union
 folder = APIRouter(tags=["folder"])
 
 
-@folder.get("{url_path:path}", response_model=list[Union[schemas.folder, schemas.file]], summary="ls")
+@folder.get("{url_path:path}", response_model=list[Union[schemas.sys_folder, schemas.sys_file]], summary="ls")
 async def get_folder_dir(path: pathlib.Path = Depends(sysfile.syspath)):
     if not path.is_dir():
         raise HTTPException(status_code=404)
     ls = []
     for _ in path.iterdir():
         if _.is_dir():
-            ls.append(schemas.folder(
+            ls.append(schemas.sys_folder(
                 name=_.name,
                 mtime=datetime.fromtimestamp(pathlib.Path.stat(_).st_mtime)
             ))
         else:
-            ls.append(schemas.file(
+            ls.append(schemas.sys_file(
                 name=_.name,
-                type=sysfile.match_emoji(_),
                 mtime=datetime.fromtimestamp(
                     pathlib.Path.stat(_).st_mtime),
                 size=sysfile.format_bytes_size(_)
@@ -31,7 +30,7 @@ async def get_folder_dir(path: pathlib.Path = Depends(sysfile.syspath)):
     
 
 
-@folder.post("{url_path:path}", response_model=schemas.folder, summary="mkdir")
+@folder.post("{url_path:path}", response_model=schemas.sys_folder, summary="mkdir")
 async def create_folder(path: pathlib.Path = Depends(sysfile.syspath), dirname: str = Form(...)):
     if not path.is_dir():
         raise HTTPException(status_code=404)
@@ -43,7 +42,7 @@ async def create_folder(path: pathlib.Path = Depends(sysfile.syspath), dirname: 
     try:
         new_dir = path / pathlib.Path(dirname)
         new_dir.mkdir(parents=False, exist_ok=False)
-        return schemas.folder(
+        return schemas.sys_folder(
             name=dirname,
             mtime=datetime.fromtimestamp(pathlib.Path.stat(new_dir).st_mtime))
     except FileNotFoundError:
