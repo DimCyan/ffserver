@@ -2,6 +2,7 @@ from pathlib import Path
 import fastapi
 import aiofiles
 import re
+import mimetypes
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
@@ -27,3 +28,7 @@ async def save_formfile(path: Path, file: fastapi.UploadFile):
     content = await file.read()
     async with aiofiles.open(path, "wb+") as f:
         await f.write(content)
+
+
+def get_mime(file: Path) -> str:
+    return mimetypes.guess_type(file.name)[0]

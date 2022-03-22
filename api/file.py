@@ -29,8 +29,11 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
     await sys_resource.save_formfile(new_file, file)
     return schemas.sys_file(
         name=new_file.name,
+        mime=sys_resource.get_mime(new_file),
         mtime=datetime.fromtimestamp(
             pathlib.Path.stat(new_file).st_mtime),
+        ctime=datetime.fromtimestamp(
+            pathlib.Path.stat(new_file).st_ctime),
         size=sys_resource.format_bytes_size(new_file)
     )
 

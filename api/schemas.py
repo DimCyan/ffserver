@@ -14,7 +14,7 @@ class sys_node(BaseModel):
     name: str
     type: sys_node_type
     mtime: datetime
-    size: Optional[str]
+    ctime: datetime
 
 
 class sys_folder(sys_node):
@@ -24,3 +24,4 @@ class sys_folder(sys_node):
 class sys_file(sys_node):
     type: sys_node_type = sys_node_type.file
     size: str
+    mime: Optional[str]
