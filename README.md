@@ -38,9 +38,13 @@ Fastapi-based file service management (Python3.8+)
 
 1. [ ] Support Previewing `Readme.md` in directory
 
-1. [x] Support QRCode
+2. [x] Support QRCode
 
-2. [ ] Create folder
+3. [ ] Create folder
+
+4. [ ] Support copy link
+
+5. [ ] Support Docker or Docker-compose
 
 ## Special thanks
 
