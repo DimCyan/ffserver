@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
-from starlette.responses import FileResponse
+from fastapi.responses import FileResponse
 from core import sys_resource
 import pathlib
 from . import schemas
@@ -26,7 +26,8 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
         raise HTTPException(status_code=412, detail="File already exists")
     if not sys_resource.check_name(file.filename):
         raise HTTPException(status_code=422, detail="Dirname cannot contain \/:*?<>|")
-    await sys_resource.save_formfile(new_file, file)
+    content = await file.read()
+    await sys_resource.write(new_file, content)
     return schemas.sys_file(
         name=new_file.name,
         mime=sys_resource.get_mime(new_file),

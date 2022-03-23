@@ -1,8 +1,9 @@
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from starlette.responses import HTMLResponse, RedirectResponse
+from fastapi import FastAPI, HTTPException
+#from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, Response, HTMLResponse
 from pathlib import Path
 import api
+import core
 
 
 app = FastAPI(title='FFServer API', description="""
@@ -13,11 +14,23 @@ app = FastAPI(title='FFServer API', description="""
 app.include_router(api.file, prefix="/api/file")
 app.include_router(api.folder, prefix="/api/folder")
 
-@app.get('/', response_class=HTMLResponse, tags=["page"])
-def index():
-    return RedirectResponse(url='/index.html')
 
-app.mount("/", StaticFiles(directory=Path(__file__).parent.joinpath("static")), name="static")
+@app.get('/{static_file:path}',response_class=Response(headers={"Content-Disposition" :"inline"}), tags=["static"])
+async def static(static_file:str):
+    """ 
+        parse `/` to `/index.html`
+
+        * fastapi.staticfiles cannot respond to the correct mimeType, but it
+    """
+    path = Path(__file__).parent.joinpath("static", static_file)
+    if path.is_file():
+        return FileResponse(path)
+    path /= Path('index.html')
+    if path.is_file():
+        html = await core.sys_resource.read(path)
+        return HTMLResponse(html.decode('utf-8'))
+    raise HTTPException(status_code=404)
+
 
 
 if __name__ == '__main__':
