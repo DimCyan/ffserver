@@ -7,11 +7,13 @@ Fastapi-based file service management (Python3.8+)
 
 # Frontend Page
 
-[/mowtwo/ffserver_frontend](https://github.com/mowtwo/ffserver_frontend)
+[https://github.com/mowtwo/ffserver_frontend](https://github.com/mowtwo/ffserver_frontend)
 
 ## Screenshots
 
-![](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ipadmini.png)
+- ipadmini
+
+    ![ipadmini](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ipadmini.png)
 
 ## Features
 
@@ -29,7 +31,7 @@ Fastapi-based file service management (Python3.8+)
     python -m main
     ```
 
-3. Open Browser With URL: [local](http://127.0.0.1:8010/)
+3. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
 
 
 ## TODO
