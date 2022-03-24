@@ -10,7 +10,7 @@ folder = APIRouter(tags=["folder"])
 
 
 @folder.get("{url_path:path}", response_model=list[Union[schemas.sys_file, schemas.sys_folder]], summary="ls")
-async def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
+def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
     """get all file_stat_info in specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
@@ -34,7 +34,7 @@ async def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
     
 
 @folder.post("{url_path:path}", response_model=schemas.sys_folder, summary="mkdir")
-async def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirname: str = Form(...)):
+def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirname: str = Form(...)):
     """create a folder in specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
@@ -56,8 +56,19 @@ async def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirn
         raise HTTPException(status_code=412, detail="Directory already exists")
 
 
+@folder.put("{url_path:path}", summary="mv")
+def move_folder(path: pathlib.Path = Depends(sys_resource.syspath), new_path: str = Form(...)):
+    """set new path(new name)"""
+    if not path.is_dir():
+        raise HTTPException(status_code=404)
+    try:
+        path.rename(sys_resource.bucket_path / pathlib.Path("." + new_path))
+    except OSError as e:
+        raise HTTPException(status_code=412, detail=f"{e}")
+
+
 @folder.delete("{url_path:path}", summary="rm -rf")
-async def remove_folder(path: pathlib.Path = Depends(sys_resource.syspath)):
+def remove_folder(path: pathlib.Path = Depends(sys_resource.syspath)):
     """remove empty folder and non-empty folder"""
     if path == sys_resource.bucket_path:
         raise HTTPException(status_code=422, detail="Cannot remove root folder")
@@ -75,7 +86,3 @@ async def remove_folder(path: pathlib.Path = Depends(sys_resource.syspath)):
         raise HTTPException(status_code=404)
     except OSError as e:
         raise HTTPException(status_code=412, detail=f"{e}")
-    
-
-    
-    

@@ -6,7 +6,7 @@ import mimetypes
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
-async def syspath(url_path: str = fastapi.Path(...)) -> Path:
+def syspath(url_path: str = fastapi.Path(...)) -> Path:
     return bucket_path / Path('.' + url_path)
 
 

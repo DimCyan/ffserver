@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+from fastapi import APIRouter, Depends, Form, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse
 from core import sys_resource
 import pathlib
@@ -39,8 +39,19 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
     )
 
 
+@file.put("{url_path:path}", summary="mv")
+def move_file(path: pathlib.Path = Depends(sys_resource.syspath), new_path: str = Form(...)):
+    """set new path(new name)"""
+    if not path.is_file():
+        raise HTTPException(status_code=404)
+    try:
+        path.rename(sys_resource.bucket_path / pathlib.Path("." + new_path))
+    except OSError as e:
+        raise HTTPException(status_code=412, detail=f"{e}")
+    
+
 @file.delete("{url_path:path}", summary="rm -f")
-async def remove_file(path: pathlib.Path = Depends(sys_resource.syspath)):
+def remove_file(path: pathlib.Path = Depends(sys_resource.syspath)):
     """remove file"""
     if not path.is_file():
         raise HTTPException(status_code=404)
@@ -50,4 +61,3 @@ async def remove_file(path: pathlib.Path = Depends(sys_resource.syspath)):
         raise HTTPException(status_code=404)
     except OSError as e:
         raise HTTPException(status_code=412, detail=f"{e}")
-    
