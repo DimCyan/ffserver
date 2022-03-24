@@ -1,23 +1,21 @@
-# FFServer
+# FFServer API
 
 ![](https://github.com/DimCyan/ffserver/blob/main/static/img/ffserver.png)
 
 Fastapi-based file service management (Python3.8+)
 
 
-# FFServer API
+# Frontend Page
 
-FFServer tekini　API
+[/mowtwo/ffserver_frontend](https://github.com/mowtwo/ffserver_frontend)
 
 ## Screenshots
 
-![](https://github.com/DimCyan/ffserver/blob/main/static/img/screenshot.png)
+![](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ipadmini.png)
 
 ## Features
 
-- ⬇️ Download file 
-
-- ⬆️ Upload file
+- Imitation win10 explorer
 
 ## Installation
 
@@ -31,19 +29,17 @@ FFServer tekini　API
     python -m main
     ```
 
-3. Open Browser With URL: [http://127.0.0.1:8010/docs](http://127.0.0.1:8010/docs)
+3. Open Browser With URL: [local](http://127.0.0.1:8010/)
 
-4. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
 
 ## TODO
 
-1. [x] delete(rm)
+1. [x] move and rename
 
-2. [ ] put(mv)
-
-3. [ ] /api/zip
+2. [ ] ???
 
 
 ## Special thanks
 
-...
+mowtwo
+
