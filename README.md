@@ -1,11 +1,11 @@
-# FFServer API
+# FFServer
 
 ![](https://github.com/DimCyan/ffserver/blob/main/static/img/ffserver.png)
 
 Fastapi-based file service management (Python3.8+)
 
 
-# Frontend Page
+## Frontend
 
 [https://github.com/mowtwo/ffserver_frontend](https://github.com/mowtwo/ffserver_frontend)
 
@@ -31,7 +31,9 @@ Fastapi-based file service management (Python3.8+)
     python -m main
     ```
 
-3. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
+3. API document: [FFServer API](http://127.0.0.1:8010/docs)
+
+4. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
 
 
 ## TODO
@@ -43,5 +45,5 @@ Fastapi-based file service management (Python3.8+)
 
 ## Special thanks
 
-mowtwo
+[mowtwo](https://github.com/mowtwo)
 
