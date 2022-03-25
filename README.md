@@ -1,6 +1,6 @@
 # FFServer
 
-![](https://github.com/DimCyan/ffserver/blob/main/static/img/ffserver.png)
+![](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ffserver.png)
 
 Fastapi-based file service management (Python3.8+)
 
