@@ -40,8 +40,13 @@ Fastapi-based file service management (Python3.8+)
 
 1. [x] move and rename
 
-2. [ ] ???
+2. [ ] Support QRCode
 
+3. [ ] Create folder
+
+4. [ ] Support copy link
+
+5. [ ] Support Docker or Docker-compose
 
 ## Special thanks
 
