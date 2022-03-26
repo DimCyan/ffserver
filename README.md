@@ -1,24 +1,23 @@
 # FFServer
 
-![](https://github.com/DimCyan/ffserver/blob/main/static/img/ffserver.png)
+![](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ffserver.png)
 
 Fastapi-based file service management (Python3.8+)
 
+
+## Frontend
+
+[https://github.com/mowtwo/ffserver_frontend](https://github.com/mowtwo/ffserver_frontend)
+
 ## Screenshots
 
-![](https://github.com/DimCyan/ffserver/blob/main/static/img/screenshot.png)
+- ipadmini
+
+    ![ipadmini](https://github.com/nanarino/ffserver/blob/main/static/screenshot/ipadmini.png)
 
 ## Features
 
-- 📁 Directory Listing
-
-- 🍞 Display directory breadcrumb path
-
-- 📍 Support some file types icon by using emoji😁
-
-- ⬇️ Download file 
-
-- ⬆️ Upload file
+- Imitation win10 explorer
 
 ## Installation
 
@@ -32,13 +31,16 @@ Fastapi-based file service management (Python3.8+)
     python -m main
     ```
 
-3. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
+3. API document: [FFServer API](http://127.0.0.1:8010/docs)
+
+4. Open Browser With URL: [http://127.0.0.1:8010/](http://127.0.0.1:8010/)
+
 
 ## TODO
 
-1. [ ] Support Previewing `Readme.md` in directory
+1. [x] move and rename
 
-2. [x] Support QRCode
+2. [ ] Support QRCode
 
 3. [ ] Create folder
 
@@ -48,8 +50,5 @@ Fastapi-based file service management (Python3.8+)
 
 ## Special thanks
 
-1. [browsepy](https://github.com/ergoithz/browsepy)
+[mowtwo](https://github.com/mowtwo)
 
-2. [gohttpserver](https://github.com/codeskyblue/gohttpserver)
-
-3. [qrcodejs](https://github.com/davidshimjs/qrcodejs)
