@@ -4,12 +4,12 @@ from . import schemas
 from core import sys_resource
 import pathlib
 from datetime import datetime
-from typing import Union
+from typing import Union, List
 
 folder = APIRouter(tags=["folder"])
 
 
-@folder.get("{url_path:path}", response_model=list[Union[schemas.sys_file, schemas.sys_folder]], summary="ls")
+@folder.get("{url_path:path}", response_model=List[Union[schemas.sys_file, schemas.sys_folder]], summary="ls")
 def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
     """get all file_stat_info in specified folder"""
     if not path.is_dir():
