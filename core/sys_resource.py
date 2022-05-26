@@ -3,6 +3,7 @@ import fastapi
 import aiofiles
 import re
 import mimetypes
+from typing import Optional
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
@@ -23,7 +24,7 @@ def check_name(name: str) -> bool:
     return not re.search(r'[\\\/\:\*\?\"\<\>\|]', name)
 
 
-def get_mime(file: Path) -> str:
+def get_mime(file: Path) -> Optional[str]:
     return mimetypes.guess_type(file.name)[0]
 
 
