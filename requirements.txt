@@ -3,3 +3,4 @@ fastapi
 pydantic
 python-multipart
 uvicorn
+filetype

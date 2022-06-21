@@ -2,7 +2,9 @@ from pathlib import Path
 import fastapi
 import aiofiles
 import re
+import filetype
 import mimetypes
+from typing import Optional
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
@@ -23,8 +25,10 @@ def check_name(name: str) -> bool:
     return not re.search(r'[\\\/\:\*\?\"\<\>\|]', name)
 
 
-def get_mime(file: Path) -> str:
-    return mimetypes.guess_type(file.name)[0]
+def get_mime(file: Path) -> Optional[str]:
+    if (type := filetype.guess(file)) is None:
+        return mimetypes.guess_type(file.name)[0]
+    return type.mime
 
 
 async def read(file: Path) -> bytes:
