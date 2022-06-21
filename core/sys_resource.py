@@ -2,6 +2,7 @@ from pathlib import Path
 import fastapi
 import aiofiles
 import re
+import filetype
 import mimetypes
 from typing import Optional
 
@@ -25,7 +26,9 @@ def check_name(name: str) -> bool:
 
 
 def get_mime(file: Path) -> Optional[str]:
-    return mimetypes.guess_type(file.name)[0]
+    if (type := filetype.guess(file)) is None:
+        return mimetypes.guess_type(file.name)[0]
+    return type.mime
 
 
 async def read(file: Path) -> bytes:
