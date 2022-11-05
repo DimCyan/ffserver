@@ -1,4 +1,4 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
+FROM python:3.8-slim
 LABEL org.opencontainers.image.authors="DimCyan"
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN mkdir /ffserver \
