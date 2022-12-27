@@ -25,7 +25,7 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
     if new_file.is_file():
         raise HTTPException(status_code=412, detail="File already exists")
     if not sys_resource.check_name(file.filename):
-        raise HTTPException(status_code=422, detail="Name cannot contain \/:*?<>|")
+        raise HTTPException(status_code=422, detail=r"Name cannot contain \/:*?<>|")
     content = await file.read()
     await sys_resource.write(new_file, content)
     return schemas.sys_file(
