@@ -4,7 +4,8 @@ import aiofiles
 import re
 import filetype
 import mimetypes
-from typing import Optional
+from typing import Optional, Union
+from functools import singledispatch
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
 
@@ -38,6 +39,18 @@ async def read(file: Path) -> bytes:
         return await f.read()
 
 
-async def write(path: Path, content: bytes):
-    async with aiofiles.open(path, "wb+") as f:
-        await f.write(content)
+@singledispatch
+async def write(data: Union[str, bytes], file: Path):
+    pass
+
+
+@write.register(bytes)
+async def _(data: bytes, file: Path):
+    async with aiofiles.open(file, "wb+") as f:
+        await f.write(data)
+
+
+@write.register(str)
+async def _(data: str, file: Path):
+    async with aiofiles.open(file, "w+", encoding='utf-8') as f:
+        await f.write(data)

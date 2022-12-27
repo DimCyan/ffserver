@@ -27,7 +27,7 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
     if not sys_resource.check_name(file.filename):
         raise HTTPException(status_code=422, detail=r"Name cannot contain \/:*?<>|")
     content = await file.read()
-    await sys_resource.write(new_file, content)
+    await sys_resource.write(content, new_file)
     return schemas.sys_file(
         name=new_file.name,
         mime=sys_resource.get_mime(new_file),
