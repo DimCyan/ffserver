@@ -128,9 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# more
+# local static
 bucket/
-.idea/
+
+# local IDE settings
+/.idea
+/.vscode
+*/.idea
+*/.vscode
 
 # local style source
 *.scss

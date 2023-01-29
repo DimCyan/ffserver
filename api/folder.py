@@ -42,7 +42,7 @@ def create_folder(path: pathlib.Path = Depends(sys_resource.syspath), dirname: s
     if not dirname:
         raise HTTPException(status_code=422, detail="Name cannot be a blank string")
     if not sys_resource.check_name(dirname):
-        raise HTTPException(status_code=422, detail="Name cannot contain \/:*?<>|")
+        raise HTTPException(status_code=422, detail=r"Name cannot contain \/:*?<>|")
     try:
         new_dir = path / pathlib.Path(dirname)
         new_dir.mkdir(parents=False, exist_ok=False)

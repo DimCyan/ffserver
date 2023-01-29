@@ -4,9 +4,11 @@ import aiofiles
 import re
 import filetype
 import mimetypes
-from typing import Optional
+from typing import Optional, Union
+from functools import singledispatch
 
 bucket_path = Path("__file__").parent.joinpath("bucket")
+
 
 def syspath(url_path: str = fastapi.Path(...)) -> Path:
     return bucket_path / Path('.' + url_path)
@@ -19,6 +21,7 @@ def format_bytes_size(file: Path) -> str:
         if bytes_size < 1024:
             return f"{bytes_size:.4g}{_}"  # reserve 4 significant digits
         bytes_size /= 1024
+    return f'{bytes_size:.4g}PB'
 
 
 def check_name(name: str) -> bool:
@@ -32,10 +35,22 @@ def get_mime(file: Path) -> Optional[str]:
 
 
 async def read(file: Path) -> bytes:
-    async with aiofiles.open(file,'rb') as f:
+    async with aiofiles.open(file, 'rb') as f:
         return await f.read()
 
 
-async def write(path: Path, content:bytes):
-    async with aiofiles.open(path, "wb+") as f:
-        await f.write(content)
+@singledispatch
+async def write(data: Union[str, bytes], file: Path):
+    pass
+
+
+@write.register(bytes)
+async def _(data: bytes, file: Path):
+    async with aiofiles.open(file, "wb+") as f:
+        await f.write(data)
+
+
+@write.register(str)
+async def _(data: str, file: Path):
+    async with aiofiles.open(file, "w+", encoding='utf-8') as f:
+        await f.write(data)
