@@ -21,6 +21,8 @@ async def upload_file(path: pathlib.Path = Depends(sys_resource.syspath), file: 
     """upload file to specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
+    if not file.filename:
+        raise HTTPException(status_code=422, detail="Name cannot be empty")
     new_file = path / pathlib.Path(file.filename)
     if new_file.is_file():
         raise HTTPException(status_code=412, detail="File already exists")
