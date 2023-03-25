@@ -8,13 +8,15 @@ from typing import Union, List
 
 folder = APIRouter(tags=["folder"])
 
+LS = List[Union[schemas.sys_file, schemas.sys_folder]]
 
-@folder.get("{url_path:path}", response_model=List[Union[schemas.sys_file, schemas.sys_folder]], summary="ls")
+
+@folder.get("{url_path:path}", response_model=LS, summary="ls")
 def get_folder_dir(path: pathlib.Path = Depends(sys_resource.syspath)):
     """get all file_stat_info in specified folder"""
     if not path.is_dir():
         raise HTTPException(status_code=404)
-    ls = []
+    ls :LS = []
     for _ in path.iterdir():
         if _.is_dir():
             ls.append(schemas.sys_folder(
